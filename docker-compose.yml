@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: medflow-postgres
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: medflow
+      POSTGRES_PASSWORD: medflow123
+      POSTGRES_DB: medflow
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+
+    build:
+      context: ./backend
+
+    container_name: medflow-backend
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - ./backend:/app
+
+    env_file:
+      - .env
+
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
