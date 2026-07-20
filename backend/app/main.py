@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 
-app = FastAPI(
-    title="MedFlow AI",
-    version="0.1.0",
-    description="AI-powered Patient Acquisition Platform"
-)
+from app.api.ai import router as ai_router
+
+app = FastAPI(title="MedFlow AI")
+
+app.include_router(ai_router)
 
 
 @app.get("/")
