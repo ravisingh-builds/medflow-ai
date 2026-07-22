@@ -1,40 +1,27 @@
-from dataclasses import dataclass
-from datetime import datetime
-from uuid import UUID, uuid4
+from uuid import uuid4
 
+from sqlalchemy import String
+from sqlalchemy.orm import Mapped, mapped_column
 
-@dataclass
-class Lead:
-    id: UUID
-    first_name: str
-    last_name: str
-    phone: str
-    email: str
-    source: str
-    chief_complaint: str
+from app.models.base import Base
 
-    status: str = "NEW"
-    ai_priority: str = "UNKNOWN"
+class Lead(Base):
+    __tablename__ = "leads"
 
-    created_at: datetime = datetime.utcnow()
-    updated_at: datetime = datetime.utcnow()
+    id: Mapped[str] = mapped_column(
+        String,
+        primary_key=True,
+        default=lambda: str(uuid4()),
+    )
 
-    @classmethod
-    def create(
-        cls,
-        first_name: str,
-        last_name: str,
-        phone: str,
-        email: str,
-        source: str,
-        chief_complaint: str,
-    ):
-        return cls(
-            id=uuid4(),
-            first_name=first_name,
-            last_name=last_name,
-            phone=phone,
-            email=email,
-            source=source,
-            chief_complaint=chief_complaint,
-        )
+    first_name: Mapped[str]
+    last_name: Mapped[str]
+    phone: Mapped[str]
+    email: Mapped[str]
+
+    source: Mapped[str]
+    chief_complaint: Mapped[str]
+
+    status: Mapped[str] = mapped_column(default="NEW")
+
+    ai_priority: Mapped[str] = mapped_column(default="UNKNOWN")
