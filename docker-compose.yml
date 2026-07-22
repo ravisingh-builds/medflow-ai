@@ -33,7 +33,7 @@ services:
       - ./backend:/app
 
     env_file:
-      - .env
+      - ./backend/.env
 
     depends_on:
       - postgres
