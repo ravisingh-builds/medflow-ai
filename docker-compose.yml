@@ -31,6 +31,7 @@ services:
 
     volumes:
       - ./backend:/app
+      - /app/.venv
 
     env_file:
       - ./backend/.env
