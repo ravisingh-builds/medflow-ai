@@ -51,3 +51,14 @@ Create Conversation
                       │
                       ▼
                   Next Question
+
+| Technology | Purpose                         |
+| ---------- | ------------------------------- |
+| Python     | Application/backend language    |
+| LangGraph  | Stateful workflow orchestration |
+| LangChain  | LLM integration and prompts     |
+| Gemini     | LLM used for AI reasoning       |
+| FastAPI    | Backend API                     |
+| PostgreSQL | Persistent database             |
+| SQLAlchemy | Database interaction            |
+| Docker     | Local containerized development |
