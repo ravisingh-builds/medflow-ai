@@ -1,17 +1,16 @@
 from langchain_core.prompts import ChatPromptTemplate
-import json
+
 from app.ai.llm import llm
-from app.ai.prompts.extraction import EXTRACTION_PROMPT
+from app.ai.prompts.priority import PRIORITY_PROMPT
 from app.ai.parser import parse_json_response
 
-
-prompt = ChatPromptTemplate.from_template(EXTRACTION_PROMPT)
+prompt = ChatPromptTemplate.from_template(PRIORITY_PROMPT)
 
 chain = prompt | llm
 
 
-def extract_referral(referral: str):
-    
+def classify_priority(referral: str):
+
     response = chain.invoke({"referral": referral})
 
     return parse_json_response(response)
