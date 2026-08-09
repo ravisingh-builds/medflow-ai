@@ -1,16 +1,34 @@
-# MedFlow AI — V1
+# MedFlow AI
 
-MedFlow AI is an AI-powered healthcare intake workflow designed to collect and organize patient information from referrals before an appointment is scheduled.
+MedFlow AI is an AI-powered healthcare intake system designed to collect,
+organize, and persist patient information from referrals before an appointment
+is scheduled.
 
-Version 1 focuses on building a reliable, stateful intake workflow using **LangGraph**, an LLM-based question planner, and PostgreSQL-backed persistence.
+The system combines LLM-powered reasoning with explicit workflow orchestration
+to automate patient intake while maintaining control over application state
+and execution.
 
-> **V1 Goal:** Build and understand a working AI workflow that can extract patient information, identify missing information, ask the patient for it, and continue the workflow until the required information has been collected.
+## V1 — AI-Powered Patient Intake
 
----
+V1 implements the core patient intake workflow from referral to collection
+of the required patient information.
 
-## Overview
+### V1 Capabilities
 
-The V1 workflow takes a patient referral as input and processes it through a series of steps:
+- Accept a patient referral
+- Extract structured patient information from the referral
+- Determine referral priority
+- Identify missing patient information
+- Generate the next appropriate patient question using an LLM
+- Pause the workflow while waiting for the patient's response
+- Resume the workflow with the patient's answer
+- Re-evaluate missing information after each response
+- Persist leads in PostgreSQL
+- Maintain resumable workflow state using LangGraph checkpointing
+- Expose the workflow through a FastAPI backend
+- Run the application using Docker
+
+## V1 Workflow
 
 ```text
 Patient Referral
@@ -50,15 +68,4 @@ Create Conversation
                    Planner
                       │
                       ▼
-                  Next Question
-
-| Technology | Purpose                         |
-| ---------- | ------------------------------- |
-| Python     | Application/backend language    |
-| LangGraph  | Stateful workflow orchestration |
-| LangChain  | LLM integration and prompts     |
-| Gemini     | LLM used for AI reasoning       |
-| FastAPI    | Backend API                     |
-| PostgreSQL | Persistent database             |
-| SQLAlchemy | Database interaction            |
-| Docker     | Local containerized development |
+                Next Question
