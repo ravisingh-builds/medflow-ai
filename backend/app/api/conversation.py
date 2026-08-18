@@ -8,23 +8,90 @@ from app.services.conversation_service import ConversationService
 from app.services.workflow_service import WorkflowService
 
 
-router = APIRouter(
-    prefix="/conversation",
-    tags=["Conversation"],
-)
+router = APIRouter(prefix="/conversation",tags=["Conversation"],)
 
-
+# Pydantic as a tool FastAPI uses to define and validate the shape of incoming data.
+"""
+HTTP JSON
+   │
+   ▼
+FastAPI
+   │
+   ▼
+Pydantic validation
+   │
+   ▼
+StartConversationRequest
+   │
+   ├── lead_id
+   ├── field
+   └── question
+"""
 class StartConversationRequest(BaseModel):
     lead_id: str
     field: str
     question: str
 
+"""
+----------------------------------------------
+request: StartConversationRequest
+
+FastAPI gets this from the HTTP request body:
+
+{
+  "lead_id": "123",
+  "field": "dob",
+  "question": "What is your date of birth?"
+}
+
+and creates:
+
+StartConversationRequest(...)
+
+---------------------------------------------
+db: Depends(get_db)
+
+Depends(get_db) tells FastAPI: "Before running this endpoint, run get_db and use its result as the db argument."
+
+Normal python fucntion:
+- def start_conversation(db):
+- If you were calling it, you'd have to do:
+- db = get_db()
+- start_conversation(db)
+With FastAPI:
+- def start_conversation(db: Session = Depends(get_db)):
+- you're telling FastAPI:
+When you need to call start_conversation()
+             ↓
+       call get_db()
+             ↓
+      take its result
+             ↓
+       put it into db
+             ↓
+   call start_conversation(db)
+
+So Depends is basically FastAPI's way of declaring how an argument should be obtained.
+
+Why do we need Depends(get_db)?
+- Imagine you have 50 endpoints:
+/conversation/start
+/conversation/reply
+/leads
+/leads/{id}
+/patients
+/patients/{id}
+/...
+and they all need a database session.
+Without dependency injection, you might repeatedly write:
+db = get_db()
+and manage the lifecycle yourself.
+                       
+"""
 
 @router.post("/start")
-def start_conversation(
-    request: StartConversationRequest,
-    db: Session = Depends(get_db),
-):
+def start_conversation(request: StartConversationRequest, db: Session = Depends(get_db),):
+
     service = ConversationService(db)
 
     conversation = service.start(

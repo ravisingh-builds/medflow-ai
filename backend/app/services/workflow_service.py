@@ -1,9 +1,6 @@
 from sqlalchemy.orm import Session
-
 from app.workflow.graph import graph
-
 from app.core.ids import new_workflow_id
-
 from langgraph.types import Command
 
 class WorkflowService:
@@ -19,7 +16,7 @@ class WorkflowService:
 
         config = {"configurable": {"thread_id": workflow_id}}
 
-        result = graph.invoke(state,config=config)
+        result = graph.invoke(state, config=config)
 
         #result = graph.invoke(state)
 

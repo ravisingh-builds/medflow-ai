@@ -1,12 +1,8 @@
 from app.core.database import SessionLocal
-
 from app.services.conversation_service import ConversationService
 
-
 def create_conversation_node(state):
-
     db = SessionLocal()
-
     try:
         service = ConversationService(db)
 

@@ -1,5 +1,6 @@
+# This node reads (extracted: dict) state field and determines what is still missing.
+# And puts its result into the separate (missing_fields: dict) state field.
 from app.ai.missing_fields import detect_missing_fields
-
 
 def missing_fields_node(state):
 
@@ -11,11 +12,7 @@ def missing_fields_node(state):
     after considering both the original referral and everything
     collected so far.
     """
-
-    missing_fields = detect_missing_fields(
-        referral=state["referral"],
-        extracted=state["extracted"],
-    )
+    missing_fields = detect_missing_fields(referral=state["referral"], extracted=state["extracted"],)
 
     print("======= State RETURNING FROM MISSING FIELDS NODE =====")
     print(missing_fields)

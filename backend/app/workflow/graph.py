@@ -1,8 +1,6 @@
 
 from app.workflow.checkpoint import checkpointer
-
 from langgraph.graph import StateGraph, END, START
-
 from app.workflow.state import ReferralState
 
 from app.workflow.nodes import (
@@ -16,16 +14,12 @@ from app.workflow.nodes import (
     reply_node,
 )
 
-
 def should_continue(state: ReferralState):
     """
-    Decide whether the workflow should finish or wait
-    for the patient's next response.
+    Decide whether the workflow should finish or wait for the patient's next response.
     """
-
     if state.get("next_question") is None:
         return "finish"
-
     return "wait"
 
 

@@ -1,3 +1,5 @@
+# And the reply_node has the complementary job: Take the patient's answer and add it to what we know i.e. ectarcted field
+
 def reply_node(state):
 
     print("========== STATE ENTRING TO REPLY NODE ==========")

@@ -1,9 +1,7 @@
 from pydantic import BaseModel
 
-
 class LeadCreate(BaseModel):
     referral: str
-
 
 class LeadResponse(BaseModel):
     id: str

@@ -1,6 +1,5 @@
 from typing import TypedDict
 
-
 class ReferralState(TypedDict, total=False):
     # Initial input
     referral: str
