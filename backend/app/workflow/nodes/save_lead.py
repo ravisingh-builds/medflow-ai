@@ -14,7 +14,7 @@ def save_lead_node(state):
         extracted = state["extracted"]
         priority = state["priority"]
 
-        patient_name = extracted.get("Patient Name", "").strip()
+        patient_name = (extracted.get("Patient Name") or "").strip()
 
         parts = patient_name.split(maxsplit=1)
 
@@ -27,8 +27,8 @@ def save_lead_node(state):
             phone="",
             email="",
             source="Referral",
-            chief_complaint=extracted.get("Diagnosis", ""),
-            ai_priority=priority.get("priority", "LOW"),
+            chief_complaint=extracted.get("Diagnosis") or "",
+            ai_priority=priority.get("priority") or "LOW",
         )
 
         lead = repository.create(lead)

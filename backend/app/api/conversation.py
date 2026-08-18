@@ -110,12 +110,16 @@ def reply(request: ConversationReply, db: Session = Depends(get_db),):
 
     result = workflow.continue_workflow(workflow_id=request.workflow_id, answer=request.answer,)
 
+    next_question = result.get("next_question")
+
     return {
         "workflow_id": request.workflow_id,
-        "question": (
-            result["next_question"]["question"]
-            if result["next_question"]
-            else None
+        "question": next_question["question"] if next_question else None,
+        "field": next_question["field"] if next_question else None,
+        "completed": next_question is None,
+        "extracted": result.get("extracted", {}),
+        "priority": (result.get("priority") or {}).get("priority", "UNKNOWN"),
+        "missing_fields": (result.get("missing_fields") or {}).get(
+            "missing_fields", []
         ),
-        "completed": result["next_question"] is None,
     }

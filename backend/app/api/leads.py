@@ -15,9 +15,17 @@ def create_lead(request: LeadCreate, db: Session = Depends(get_db),):
     
     result = service.start_intake(request.referral)
 
+    next_question = result.get("next_question")
+
     return {
         "lead_id": result["lead_id"],
         "conversation_id": result["conversation_id"],
-        "question": result["next_question"]["question"],
+        "question": next_question["question"] if next_question else None,
+        "field": next_question["field"] if next_question else None,
         "workflow_id": result["workflow_id"],
+        "extracted": result.get("extracted", {}),
+        "priority": (result.get("priority") or {}).get("priority", "UNKNOWN"),
+        "missing_fields": (result.get("missing_fields") or {}).get(
+            "missing_fields", []
+        ),
     }
