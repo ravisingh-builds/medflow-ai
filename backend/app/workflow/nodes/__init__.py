@@ -6,3 +6,6 @@ from .save_lead import save_lead_node
 from .create_conversation import create_conversation_node
 from .reply import reply_node
 from .interrupt import interrupt_node
+from .finish import finish_node
+from .offer_slots import offer_slots_node
+from .confirm_slot import confirm_slot_node

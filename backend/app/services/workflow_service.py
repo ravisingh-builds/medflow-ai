@@ -1,34 +1,35 @@
 from sqlalchemy.orm import Session
-from app.workflow.graph import graph
-from app.core.ids import new_workflow_id
 from langgraph.types import Command
 
-class WorkflowService:
+from app.workflow.graph import graph
+from app.core.ids import new_workflow_id
 
+
+class WorkflowService:
     def __init__(self, db: Session):
         self.db = db
 
     def start_intake(self, referral: str):
-
-        state = {"referral": referral,}
-
         workflow_id = new_workflow_id()
-
+        state = {"referral": referral, "workflow_id": workflow_id}
         config = {"configurable": {"thread_id": workflow_id}}
-
         result = graph.invoke(state, config=config)
 
-        #result = graph.invoke(state)
-
         return {
-            "lead_id": result["lead_id"],
-            "conversation_id": result["conversation_id"],
-            "next_question": result["next_question"],
+            "lead_id": result.get("lead_id"),
+            "conversation_id": result.get("conversation_id"),
+            "next_question": result.get("next_question"),
             "workflow_id": workflow_id,
+            "extracted": result.get("extracted", {}),
+            "priority": result.get("priority", {}),
+            "missing_fields": result.get("missing_fields", {}),
+            "offered_slots": result.get("offered_slots") or [],
+            "appointment": result.get("appointment"),
+            "booking_message": result.get("booking_message"),
+            "completed": result.get("completed", False),
         }
-    
-    def continue_workflow(self, workflow_id: str, answer: str,):
 
+    def continue_workflow(self, workflow_id: str, answer: str):
         config = {"configurable": {"thread_id": workflow_id}}
 
         print("=============THREAD ID===========")
@@ -36,11 +37,18 @@ class WorkflowService:
         print("==============STATE BEFORE RESUME===============")
         print(graph.get_state(config))
 
-        #For an interrupted graph, you should not pass a new state.
-        #state = {"patient_answer": answer}
-        #result = graph.invoke(state, config=config,)
-
-        #You should resume the interrupt itself
-        result = graph.invoke(Command(resume=answer), config=config,)
-
+        result = graph.invoke(Command(resume=answer), config=config)
         return result
+
+    def get_state(self, workflow_id: str) -> dict:
+        config = {"configurable": {"thread_id": workflow_id}}
+        snapshot = graph.get_state(config)
+        return snapshot.values or {}
+
+    def update_state(self, workflow_id: str, values: dict) -> None:
+        """Patch the checkpointed state for a workflow (e.g. a post-hoc
+        correction to an already-collected field) without re-running the
+        graph.
+        """
+        config = {"configurable": {"thread_id": workflow_id}}
+        graph.update_state(config, values)

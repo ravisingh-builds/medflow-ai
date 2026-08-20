@@ -15,3 +15,9 @@ class LeadRepository:
         self.db.refresh(lead)
 
         return lead
+
+    def get(self, lead_id: str):
+        return self.db.get(Lead, lead_id)
+
+    def save(self):
+        self.db.commit()

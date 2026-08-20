@@ -14,6 +14,18 @@ def save_lead_node(state):
         extracted = state["extracted"]
         priority = state["priority"]
 
+        # This node re-runs on every question/answer loop of the workflow
+        # (not just the first time), so once a lead already exists for this
+        # thread we update it in place instead of inserting a duplicate.
+        if state.get("lead_id"):
+            lead = repository.get(state["lead_id"])
+
+            if lead is not None:
+                lead.ai_priority = priority.get("priority") or lead.ai_priority
+                lead.chief_complaint = extracted.get("Diagnosis") or lead.chief_complaint
+                repository.save()
+                return state
+
         patient_name = (extracted.get("Patient Name") or "").strip()
 
         parts = patient_name.split(maxsplit=1)

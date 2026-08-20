@@ -1,5 +1,6 @@
 from typing import TypedDict
 
+
 class ReferralState(TypedDict, total=False):
     # Initial input
     referral: str
@@ -13,6 +14,14 @@ class ReferralState(TypedDict, total=False):
     next_question: dict
     patient_answer: str
 
+    # Scheduling
+    offered_slots: list
+    appointment: dict
+    booking_message: str
+
     # Persisted entity IDs
     lead_id: str
     conversation_id: str
+    workflow_id: str
+
+    completed: bool

@@ -6,8 +6,13 @@ def create_conversation_node(state):
     try:
         service = ConversationService(db)
 
-        conversation = service.start(
+        # Idempotent: the first time through, this creates the conversation
+        # row; on every later question/answer loop of the same workflow it
+        # just updates that same row (see ConversationService.upsert).
+        conversation = service.upsert(
+            conversation_id=state.get("conversation_id"),
             lead_id=state["lead_id"],
+            workflow_id=state.get("workflow_id"),
             field=state["next_question"]["field"],
             question=state["next_question"]["question"],
         )

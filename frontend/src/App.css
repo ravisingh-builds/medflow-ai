@@ -200,6 +200,148 @@ body,
   gap: 14px;
 }
 
+/* Resume (paused conversations) */
+
+.resume-section {
+  padding: 16px;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+}
+
+.resume-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.resume-section-header h3 {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink-700);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.new-intake-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-muted);
+  color: var(--brand-300);
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease);
+}
+
+.new-intake-button:hover:not(:disabled) {
+  border-color: var(--brand-100);
+  background: var(--brand-50);
+}
+
+.new-intake-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.resume-empty {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--ink-500);
+  line-height: 1.5;
+}
+
+.resume-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.resume-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 11px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  border: 1px solid var(--line);
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease),
+    transform 0.15s var(--ease);
+}
+
+.resume-item:hover:not(:disabled) {
+  border-color: var(--brand-100);
+  background: var(--brand-50);
+  transform: translateX(2px);
+}
+
+.resume-item:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.resume-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.resume-item-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-900);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resume-priority {
+  padding: 2px 9px;
+  font-size: 10.5px;
+  flex-shrink: 0;
+}
+
+.resume-item-question {
+  font-size: 12px;
+  color: var(--ink-500);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resume-item-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-300);
+}
+
+.resume-icon {
+  margin-left: 6px;
+  color: var(--brand-300);
+}
+
 .status-card {
   display: flex;
   align-items: center;
@@ -702,6 +844,192 @@ body,
   align-items: center;
   justify-content: center;
   gap: 8px;
+}
+
+/* Slot picker (click-to-book) */
+
+.slot-picker {
+  padding: 16px 22px 20px;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.slot-picker-hint {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-500);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.slot-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.slot-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  color: var(--ink-900);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease),
+    transform 0.15s var(--ease);
+}
+
+.slot-option:hover:not(:disabled) {
+  border-color: var(--brand-500);
+  background: rgba(18, 185, 129, 0.1);
+  transform: translateY(-1px);
+}
+
+.slot-option:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.slot-option svg {
+  flex-shrink: 0;
+  color: var(--brand-300);
+}
+
+/* Appointments (left pane) */
+
+.appointment-section {
+  margin-top: 0;
+}
+
+.appointment-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.appointment-card {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--surface-muted);
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease);
+}
+
+.appointment-card-selected {
+  border-color: var(--brand-500);
+  background: var(--brand-50);
+}
+
+.appointment-card-select {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.appointment-card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--brand-300);
+  margin-bottom: 6px;
+}
+
+.appointment-doctor {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink-900);
+}
+
+.appointment-when {
+  margin: 0 0 10px;
+  font-size: 12.5px;
+  color: var(--ink-700);
+}
+
+.appointment-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.review-appointment-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: transparent;
+  color: var(--ink-500);
+  font: inherit;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+.review-appointment-button:hover {
+  color: var(--brand-300);
+}
+
+.complete-appointment-button {
+  border: none;
+  background: transparent;
+  color: var(--brand-300);
+  font: inherit;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.complete-appointment-button:hover {
+  color: var(--brand-500);
+}
+
+/* Appointment review (chat header close button) */
+
+.close-review-button {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s var(--ease);
+}
+
+.close-review-button:hover {
+  background: rgba(255, 255, 255, 0.24);
 }
 
 /* Animations */
